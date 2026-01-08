@@ -1,0 +1,33 @@
+
+import React, { useState } from 'react';
+
+const MiniGame: React.FC<{onScore: (p: number) => void}> = ({ onScore }) => {
+  const [playing, setPlaying] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const handleGameEnd = () => {
+    onScore(score * 10);
+    setPlaying(false);
+  };
+
+  return (
+    <div className="h-full flex flex-col items-center justify-center p-10">
+      {!playing ? (
+        <div className="text-center space-y-6">
+          <h2 className="font-round text-3xl text-gray-700">Sweet Jump</h2>
+          <p className="font-round text-gray-400 italic">점프해서 장애물을 피하세요!</p>
+          <button onClick={() => {setPlaying(true); setScore(0);}} className="px-12 py-4 bg-[#FF9E9E] text-white rounded-3xl font-round text-xl shadow-lg">게임 시작</button>
+        </div>
+      ) : (
+        <div className="text-center space-y-10" onClick={() => setScore(s => s + 1)}>
+          <p className="font-round text-6xl text-[#FF9E9E]">{score}</p>
+          <div className="w-32 h-32 bg-rose-50 rounded-full flex items-center justify-center text-5xl mx-auto animate-bounce">🏃</div>
+          <p className="font-round text-gray-300">화면을 터치해서 점수 올리기!</p>
+          <button onClick={handleGameEnd} className="text-gray-300 font-round">그만할래요</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MiniGame;
